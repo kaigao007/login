@@ -1,38 +1,50 @@
-//
-var password = document.getElementById('password');
+var pwdInput = document.getElementById('password');
 
-var strengthbut = document.getElementById('strpw');
-strengthbut.disabled = true;
-var score = 0;
+var btnSubmit = document.getElementById('btnsubmit');
 
-var strengthindicater = [
-  "Worst",
-  "Bad",
-  "Weak",
-  "Good",
-  "Strong"
-]
-password.addEventListener('input', function() {
+pwdInput.addEventListener('input', function() {
 
-	
-var strength = document.getElementById('strength');
-var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
-var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
-var enoughRegex = new RegExp("(?=.{6,}).*", "g");
-var pwd = document.getElementById("password");
-if (pwd.value.length==0) {
-	strength.innerHTML = 'Type Password';
-} else if (false == enoughRegex.test(pwd.value)) {
-	strength.innerHTML = 'More Characters';
-} else if (strongRegex.test(pwd.value)) {
-	strength.innerHTML = '<span style="color:green">Strong!</span>';
-	score=4;
-} else if (mediumRegex.test(pwd.value)) {
-	strength.innerHTML = '<span style="color:orange">Medium!</span>';
-} else {
-	strength.innerHTML = '<span style="color:red">Weak!</span>';
-}
-	if(strengthindicater[score]=='Strong'){
-		strengthbut.disabled = false;
-	}
+  var pwlevel = document.getElementById('pwlevel');
+
+  var minLengthPattern = new RegExp("(?=.{6,}).*", "g");
+
+  var mediumPattern = new RegExp("^(?=.{6,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+
+  var strongPattern = new RegExp("^(?=.{6,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+
+  var password = document.getElementById("password");
+
+
+  if (password.value.length == 0) {
+
+
+    pwlevel.innerHTML = 'Please enter password';
+
+    btnSubmit.disabled = true;
+
+  } else if (false == minLengthPattern.test(password.value)) {
+
+    pwlevel.innerHTML = 'Password must be at least 6 characters.  Not strong engough!';
+
+    btnSubmit.disabled = true;
+
+  } else if (strongPattern.test(password.value)) {
+
+    pwlevel.innerHTML = '<p style="color:green">Your password is strong engough to submit!</p>';
+
+    btnSubmit.disabled = false;
+
+  } else if (mediumPattern.test(password.value)) {
+
+    pwlevel.innerHTML = 'This password is medium! Not strong engough!';
+
+
+    btnSubmit.disabled = true;
+  } else {
+
+    pwlevel.innerHTML = 'This password is week!';
+
+
+    btnSubmit.disabled = true;
+  }
 });
